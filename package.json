@@ -1,8 +1,8 @@
 {
-    "name": "myApp",
+    "name": "Restaurante do Diogo",
     "version": "0.0.1",
-    "author": "Ionic Framework",
-    "homepage": "http://ionicframework.com/",
+    "author": "Diogo Alves da Silva",
+    "homepage": "http://www.galinhaprogramadora.com.br/",
     "private": true,
     "scripts": {
         "clean": "ionic-app-scripts clean",
@@ -47,7 +47,7 @@
         "ionic": "3.6.0",
         "typescript": "2.3.4"
     },
-    "description": "An Ionic project",
+    "description": "Restaurante do Diogo",
     "cordova": {
         "plugins": {
             "cordova-sqlite-storage": {},
