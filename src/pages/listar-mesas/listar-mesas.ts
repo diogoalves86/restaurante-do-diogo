@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage } from 'ionic-angular';
-import { BaseProvider } from '../../providers/base/base';
+import { ClienteProvider } from '../../providers/cliente/cliente';
 /**
  * Generated class for the ListarMesasPage page.
  *
@@ -14,11 +14,12 @@ import { BaseProvider } from '../../providers/base/base';
   templateUrl: 'listar-mesas.html',
 })
 export class ListarMesasPage {
-  private provider : BaseProvider;
+  private client : ClienteProvider;
 
   constructor() {
-    //this.provider = new BaseProvider();
-    //this.provider.createDatabase();
+    this.client = new ClienteProvider();
+    alert("Uma linha antes");
+    this.client.get();
   }
 
   ionViewDidLoad() {

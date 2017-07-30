@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 //import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Platform } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 /*
@@ -15,11 +14,9 @@ export class SqlProvider {
 	database = null;
   private dbName:string = "RestauranteDiogo";
   private sqlite: SQLite;
-  private platform:Platform;
   private db: SQLiteObject;
 
-  constructor(plat:Platform) {
-    this.platform = plat;
+  constructor() {
     this.sqlite = new SQLite();
     this.init();
   }
@@ -29,7 +26,6 @@ export class SqlProvider {
   }
 
   private connect(){
-
     this.sqlite.create({
       name: this.dbName + ".db",
       location: 'default'

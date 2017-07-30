@@ -14,6 +14,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SqlProvider } from '../providers/sql/sql';
 import { BaseProvider } from '../providers/base/base';
+import { ClienteProvider } from '../providers/cliente/cliente';
+import { MesaProvider } from '../providers/mesa/mesa';
+import { PratoProvider } from '../providers/prato/prato';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { BaseProvider } from '../providers/base/base';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SqlProvider,
     BaseProvider,
-    BaseProvider
+    BaseProvider,
+    ClienteProvider,
+    MesaProvider,
+    PratoProvider
   ]
 })
 export class AppModule {}

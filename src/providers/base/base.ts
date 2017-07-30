@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import { SqlProvider } from '../../providers/sql/sql';
 
@@ -11,8 +10,7 @@ import { SqlProvider } from '../../providers/sql/sql';
 */
 @Injectable()
 export class BaseProvider {
-	private sql : SqlProvider;
-	private platform : Platform;
+	private sql:SqlProvider;
 
   constructor() {
     console.log('Hello BaseProvider Provider');
@@ -25,7 +23,6 @@ export class BaseProvider {
     this.createDish();
     this.createDishTableRelationship();
     this.createIndexes();
-    alert("Banco de dados criado com sucesso!");
   }
 
   private createClient(){
