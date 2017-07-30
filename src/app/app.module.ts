@@ -13,6 +13,7 @@ import { NovaPagina2Page } from '../pages/nova-pagina2/nova-pagina2';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SqlProvider } from '../providers/sql/sql';
+import { BaseProvider } from '../providers/base/base';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { SqlProvider } from '../providers/sql/sql';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SqlProvider
+    SqlProvider,
+    BaseProvider,
+    BaseProvider
   ]
 })
 export class AppModule {}
