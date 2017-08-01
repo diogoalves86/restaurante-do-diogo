@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { SqlProvider } from '../../providers/sql/sql';
+import { MockProvider } from '../../providers/mock/mock';
 
 /*
   Generated class for the BaseProvider provider.
@@ -11,10 +12,12 @@ import { SqlProvider } from '../../providers/sql/sql';
 @Injectable()
 export class BaseProvider {
 	private sql:SqlProvider;
+	private mock:MockProvider;
 
   constructor() {
     console.log('Hello BaseProvider Provider');
   	this.sql = new SqlProvider();
+  	this.mock = new MockProvider();
   }
 
   public createDatabase(){
@@ -23,15 +26,23 @@ export class BaseProvider {
     this.createDish();
     this.createDishTableRelationship();
     this.createIndexes();
-    this.mock();
+    this.makeMock();
   }
 
-  private mock(){
+  private makeMock(){
+  	this.verifyDatabase();
+  }
+
+  private verifyDatabase(){
   	this.sql.execute(
-  			'INSERT INTO "Cliente"(nome,email,endereco) VALUES (?, ?, ?)',
-  			['Diogo', 'diogo@email.com', 'Endereço teste']
+  		'SELECT COUNT(*) count FROM Cliente',
+  		[],
+  		function(data){
+  			if (data[0].count == 0)
+  				this.mock.generate();
+  		}
 		);
-		console.log('MOCK feito');
+		//this.sql.execute('DELETE FROM Cliente');
   }
 
   private createClient(){

@@ -15,7 +15,6 @@ declare var window:any;
 @Injectable()
 export class SqlProvider {
 	database = null;
-  private dbName:string = "RestauranteDiogo";
   private sqlite: SQLite;
   private db: SQLiteObject;
   private plat : Platform;
@@ -49,19 +48,19 @@ export class SqlProvider {
     .catch(e => console.log("Erro ao realizar conexão com banco de dados! Informações: " + e));
   }
   
-  public execute(sqlCommand:string, params:Array<any> = []){
+  public execute(sqlCommand:string, params:Array<any> = [], callback = function(data){}){
   	if (this.db instanceof SQLiteObject)
   		return this.executeSqliteCommand(sqlCommand, params);
   	else
-    	return this.executeWebSqlCommand(sqlCommand, params);
+    	return this.executeWebSqlCommand(sqlCommand, params, callback);
   }
 
-  private executeWebSqlCommand(sqlCommand:string, params:Array<any>){
-  	this.db.transaction(function (tx) {
-        return tx.executeSql(sqlCommand, params, function(e) {
-          console.log('Erro ao executar o comando ao WEBSQL. Informações: ' + e.message);
-        }
-    });
+  private executeWebSqlCommand(sqlCommand:string, params:Array<any>, callback = function(data){}){
+  	var finalResult = this.db.transaction(function (tx) {
+	      tx.executeSql(sqlCommand, params, function(error, result) {
+	      	callback(result.rows);
+	      });
+	    });
   }
 
   private executeSqliteCommand(sqlCommand:string, params:Array<any>){

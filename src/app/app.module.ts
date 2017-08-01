@@ -16,6 +16,7 @@ import { BaseProvider } from '../providers/base/base';
 import { ClienteProvider } from '../providers/cliente/cliente';
 import { MesaProvider } from '../providers/mesa/mesa';
 import { PratoProvider } from '../providers/prato/prato';
+import { MockProvider } from '../providers/mock/mock';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PratoProvider } from '../providers/prato/prato';
     BaseProvider,
     ClienteProvider,
     MesaProvider,
-    PratoProvider
+    PratoProvider,
+    MockProvider
   ]
 })
 export class AppModule {}
