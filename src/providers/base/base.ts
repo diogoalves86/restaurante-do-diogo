@@ -34,15 +34,7 @@ export class BaseProvider {
   }
 
   private verifyDatabase(){
-  	this.sql.execute(
-  		'SELECT COUNT(*) count FROM Cliente',
-  		[],
-  		function(data){
-  			if (data[0].count == 0)
-  				this.mock.generate();
-  		}
-		);
-		//this.sql.execute('DELETE FROM Cliente');
+  	this.mock.generate();
   }
 
   private createClient(){

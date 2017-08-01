@@ -35,15 +35,27 @@ export class MockProvider {
 
   public generate(){
 		console.log('Preenchendo dados iniciais do banco de dados');
+		this.verifyData();
   	this.makeClient();
   	this.makeDishes();
 		console.log('Dados iniciais preenchidos com sucesso!');
   }
 
+  private verifyData(){
+  	this.sql.execute(
+  		'SELECT COUNT(*) count FROM Cliente',
+  		[],
+  		function(data){
+  			if (data[0].count == 0)
+  				this.mock.generate();
+  		}
+		);
+  }
+
   private makeDishes(){
   	for (var i = this.dishes.length - 1; i >= 0; i--) {
 	  	this.sql.execute(
-	  			'INSERT INTO "Cliente"(nome,descricao,numeroPessoas) VALUES (?, ?, ?)',
+	  			'INSERT INTO "Prato"(nome,descricao,numeroPessoas) VALUES (?, ?, ?)',
 	  			[this.dishes[i].nome, this.dishes[i].descricao, this.dishes[i].numeroPessoas]
 			);
   	}
