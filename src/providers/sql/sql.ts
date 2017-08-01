@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Platform } from 'ionic-angular';
 //import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
+const DB_NAME:string = "RestauranteDiogo";
+declare var window:any;
 /*
   Generated class for the SqlProvider provider.
 
@@ -15,19 +18,30 @@ export class SqlProvider {
   private dbName:string = "RestauranteDiogo";
   private sqlite: SQLite;
   private db: SQLiteObject;
+  private plat : Platform;
 
   constructor() {
+    this.plat = new Platform();
     this.sqlite = new SQLite();
     this.init();
   }
   
   private init(){
-    this.connect();
+    if(this.plat.is('cordova'))
+      this.connectSqlite();
+    else
+      this.connectWebSql();
   }
 
-  private connect(){
+  private connectWebSql(){
+    this.db = window.openDatabase(DB_NAME, "1.0", "Restaurante Diogo", -1);
+    alert("Conectou WebSQL");
+    console.log(this.db);
+  }
+
+  private connectSqlite(){
     this.sqlite.create({
-      name: this.dbName + ".db",
+      name: DB_NAME + ".db",
       location: 'default'
     })
     .then((db: SQLiteObject) => {
@@ -40,9 +54,22 @@ export class SqlProvider {
   }
   
   public execute(sqlCommand:string){
-    this.db.executeSql(sqlCommand, {})
-        .then((res) => console.log('Consulta SQL executada: ' + JSON.stringify(res)))
-        //.then((res) => alert('Consulta SQL executada: ' + JSON.stringify(res)))
+  	if (this.db instanceof SQLiteObject)
+  		this.executeSqliteCommand(sqlCommand);
+  	else
+    	this.executeWebSqlCommand(sqlCommand);
+  }
+
+  private executeWebSqlCommand(sqlCommand:string){
+  	this.db.transaction(function (tx) {
+        tx.executeSql(sqlCommand);
+    });
+  }
+
+  private executeSqliteCommand(sqlCommand:string){
+  	this.db.executeSql(sqlCommand, {})
+        //.then((res) => console.log('Consulta SQL executada: ' + JSON.stringify(res)))
+        .then((res) => alert('Consulta SQL executada: ' + JSON.stringify(res)))
         .catch(e =>alert("Erro ao executar consulta SQL: " + e.message));
   }
 
