@@ -23,6 +23,15 @@ export class BaseProvider {
     this.createDish();
     this.createDishTableRelationship();
     this.createIndexes();
+    this.mock();
+  }
+
+  private mock(){
+  	this.sql.execute(
+  			'INSERT INTO "Cliente"(nome,email,endereco) VALUES (?, ?, ?)',
+  			['Diogo', 'diogo@email.com', 'Endereço teste']
+		);
+		console.log('MOCK feito');
   }
 
   private createClient(){

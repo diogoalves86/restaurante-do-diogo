@@ -18,7 +18,7 @@ export class ClienteProvider {
   }
 
   public get(){
-  	alert(this.sql.execute("SELECT * FROM Cliente"));
+  	return this.sql.execute("SELECT * FROM Cliente");
   }
 
 }

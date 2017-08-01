@@ -35,8 +35,6 @@ export class SqlProvider {
 
   private connectWebSql(){
     this.db = window.openDatabase(DB_NAME, "1.0", "Restaurante Diogo", -1);
-    alert("Conectou WebSQL");
-    console.log(this.db);
   }
 
   private connectSqlite(){
@@ -47,27 +45,27 @@ export class SqlProvider {
     .then((db: SQLiteObject) => {
       this.db = db;
       console.log("Conexão com banco de dados realizada com sucesso!");
-      //alert("Conexão com banco de dados realizada com sucesso!");
     })
-    //.catch(e => console.log("Erro ao realizar conexão com banco de dados! Informações: " + e));
-    .catch(e => alert("Erro ao realizar conexão com banco de dados! Informações: " + e));
+    .catch(e => console.log("Erro ao realizar conexão com banco de dados! Informações: " + e));
   }
   
-  public execute(sqlCommand:string){
+  public execute(sqlCommand:string, params:Array<any> = []){
   	if (this.db instanceof SQLiteObject)
-  		this.executeSqliteCommand(sqlCommand);
+  		return this.executeSqliteCommand(sqlCommand, params);
   	else
-    	this.executeWebSqlCommand(sqlCommand);
+    	return this.executeWebSqlCommand(sqlCommand, params);
   }
 
-  private executeWebSqlCommand(sqlCommand:string){
+  private executeWebSqlCommand(sqlCommand:string, params:Array<any>){
   	this.db.transaction(function (tx) {
-        tx.executeSql(sqlCommand);
+        return tx.executeSql(sqlCommand, params, function(e) {
+          console.log('Erro ao executar o comando ao WEBSQL. Informações: ' + e.message);
+        }
     });
   }
 
-  private executeSqliteCommand(sqlCommand:string){
-  	this.db.executeSql(sqlCommand, {})
+  private executeSqliteCommand(sqlCommand:string, params:Array<any>){
+  	return this.db.executeSql(sqlCommand, params)
         //.then((res) => console.log('Consulta SQL executada: ' + JSON.stringify(res)))
         .then((res) => alert('Consulta SQL executada: ' + JSON.stringify(res)))
         .catch(e =>alert("Erro ao executar consulta SQL: " + e.message));

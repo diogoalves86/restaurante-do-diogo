@@ -18,8 +18,7 @@ export class ListarMesasPage {
 
   constructor() {
     this.client = new ClienteProvider();
-    alert("Uma linha antes");
-    this.client.get();
+    console.log(this.client.get());
   }
 
   ionViewDidLoad() {
