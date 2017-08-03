@@ -46,9 +46,9 @@ export class MockProvider {
   		'SELECT COUNT(*) count FROM Cliente',
   		[],
   		function(data){
-  			if (data[0].count == 0)
-  				this.mock.generate();
-  		}
+  			if (data[0].count == 0){}
+  				//TODO
+			}
 		);
   }
 
