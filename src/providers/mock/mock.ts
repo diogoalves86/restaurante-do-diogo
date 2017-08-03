@@ -36,8 +36,8 @@ export class MockProvider {
   public generate(){
 		console.log('Preenchendo dados iniciais do banco de dados');
 		this.verifyData();
-  	this.makeClient();
-  	this.makeDishes();
+  	//this.makeClient();
+  	//this.makeDishes();
 		console.log('Dados iniciais preenchidos com sucesso!');
   }
 
