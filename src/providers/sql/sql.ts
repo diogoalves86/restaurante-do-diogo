@@ -6,6 +6,16 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 const DB_NAME:string = "RestauranteDiogo";
 declare var window:any;
+var result:any;
+
+function handleResult(res:any){
+	result = res;
+}
+
+export function getResult(){
+	return result;
+}
+
 /*
   Generated class for the SqlProvider provider.
 
@@ -17,6 +27,7 @@ export class SqlProvider {
 	database = null;
   private sqlite: SQLite;
   private db: SQLiteObject;
+  private result:any;
   private plat : Platform;
 
   constructor() {
@@ -55,10 +66,15 @@ export class SqlProvider {
     	return this.executeWebSqlCommand(sqlCommand, params, callback);
   }
 
+  public getResult(){
+  	this.result = result;
+  	return result;
+  }
+
   private executeWebSqlCommand(sqlCommand:string, params:Array<any>, callback = function(data){}){
   	var finalResult = this.db.transaction(function (tx) {
 	      tx.executeSql(sqlCommand, params, function(error, result) {
-	      	callback(result.rows);
+	      	handleResult(result.rows);
 	      });
 	    });
   }

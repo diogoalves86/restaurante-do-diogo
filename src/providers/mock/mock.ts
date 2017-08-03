@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { SqlProvider } from '../../providers/sql/sql';
+import { SqlProvider, getResult } from '../../providers/sql/sql';
 
 /*
   Generated class for the MockProvider provider.
@@ -34,22 +34,18 @@ export class MockProvider {
   }
 
   public generate(){
+  	//this.sql.execute('DELETE FROM Cliente');
+  	//this.sql.execute('DELETE FROM Prato');
 		console.log('Preenchendo dados iniciais do banco de dados');
 		this.verifyData();
-  	this.makeClient();
-  	this.makeDishes();
 		console.log('Dados iniciais preenchidos com sucesso!');
   }
 
   private verifyData(){
   	this.sql.execute(
-  		'SELECT COUNT(*) count FROM Cliente',
-  		[],
-  		function(data){
-  			if (data[0].count == 0)
-  				this.mock.generate();
-  		}
+  		'SELECT COUNT(*) count FROM Cliente'
 		);
+		console.log(getResult());
   }
 
   private makeDishes(){
